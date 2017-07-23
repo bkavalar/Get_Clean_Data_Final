@@ -3,7 +3,7 @@
 #Prepared by B. Kavalar - 23 July 2017
 
 #set working directory
-setwd("C:/Backup/2017 IRAD/R Programming/JHU Data Science Course/Getting & Cleaning Data/Week 4/Project")
+setwd("C:/Project")
 
 #read in csv files for X, Y, and Subject Test that were imported into Excel from the provided UCI text files
 #x_test is the raw data results for each subject with 561 variables per row
