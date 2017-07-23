@@ -300,7 +300,9 @@ The data was saved to a file called "finalTidyDataSet.csv" for later inspection.
 
 - finalTidyMeanData_i: data set for during for loop to create data for each subject number for the final data set.  This data is combined with finaTidyDataSet in a recurive manner to create the final data set
 
-- finalTidyDataSet: data set used to create final tidy data set that only shows mean and Std Dev for each subject and activity type  
+- finalTidyDataSet: data set used to create final tidy data set that only shows mean and Std Dev for each subject and activity type 
+
+- convertFileTxt - data frame used to hold csv data to convert to a text file for output per assignment requirement
 
 
 
