@@ -26,9 +26,17 @@ activityrecognition@smartlab.ws
 www.smartlab.ws
 ==================================================================
 
-The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. Each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) wearing a smartphone (Samsung Galaxy S II) on the waist. Using its embedded accelerometer and gyroscope, we captured 3-axial linear acceleration and 3-axial angular velocity at a constant rate of 50Hz. The experiments have been video-recorded to label the data manually. The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data. 
+The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. Each person performed six 
+activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) wearing a smartphone (Samsung Galaxy S II) on the 
+waist. Using its embedded accelerometer and gyroscope, we captured 3-axial linear acceleration and 3-axial angular velocity at a 
+constant rate of 50Hz. The experiments have been video-recorded to label the data manually. The obtained dataset has been randomly 
+partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data. 
 
-The sensor signals (accelerometer and gyroscope) were pre-processed by applying noise filters and then sampled in fixed-width sliding windows of 2.56 sec and 50% overlap (128 readings/window). The sensor acceleration signal, which has gravitational and body motion components, was separated using a Butterworth low-pass filter into body acceleration and gravity. The gravitational force is assumed to have only low frequency components, therefore a filter with 0.3 Hz cutoff frequency was used. From each window, a vector of features was obtained by calculating variables from the time and frequency domain. See 'features_info.txt' for more details. 
+The sensor signals (accelerometer and gyroscope) were pre-processed by applying noise filters and then sampled in fixed-width sliding 
+windows of 2.56 sec and 50% overlap (128 readings/window). The sensor acceleration signal, which has gravitational and body motion 
+components, was separated using a Butterworth low-pass filter into body acceleration and gravity. The gravitational force is assumed to 
+have only low frequency components, therefore a filter with 0.3 Hz cutoff frequency was used. From each window, a vector of features 
+was obtained by calculating variables from the time and frequency domain. See 'features_info.txt' for more details. 
 
 For each record it is provided:
 ======================================
@@ -60,13 +68,18 @@ The dataset includes the following files:
 
 The following files are available for the train and test data. Their descriptions are equivalent. 
 
-- 'train/subject_train.txt': Each row identifies the subject who performed the activity for each window sample. Its range is from 1 to 30. 
+- 'train/subject_train.txt': Each row identifies the subject who performed the activity for each window sample. 
+Its range is from 1 to 30. 
 
-- 'train/Inertial Signals/total_acc_x_train.txt': The acceleration signal from the smartphone accelerometer X axis in standard gravity units 'g'. Every row shows a 128 element vector. The same description applies for the 'total_acc_x_train.txt' and 'total_acc_z_train.txt' files for the Y and Z axis. 
+- 'train/Inertial Signals/total_acc_x_train.txt': The acceleration signal from the smartphone accelerometer X axis in standard gravity
+units 'g'. Every row shows a 128 element vector. The same description applies for the 'total_acc_x_train.txt' and 
+'total_acc_z_train.txt' files for the Y and Z axis. 
 
-- 'train/Inertial Signals/body_acc_x_train.txt': The body acceleration signal obtained by subtracting the gravity from the total acceleration. 
+- 'train/Inertial Signals/body_acc_x_train.txt': The body acceleration signal obtained by subtracting the gravity from the total 
+acceleration. 
 
-- 'train/Inertial Signals/body_gyro_x_train.txt': The angular velocity vector measured by the gyroscope for each window sample. The units are radians/second. 
+- 'train/Inertial Signals/body_gyro_x_train.txt': The angular velocity vector measured by the gyroscope for each window sample. The 
+units are radians/second. 
 
 Notes: 
 ======
@@ -106,7 +119,9 @@ I then performed a cbind on the three dataset files X, Y, and Subject for test a
 I then inspected the UCI dataset features.txt file to understand what variables were only related to mean and 
 standard deviation.  I made a list of what column number cooresponded to those variables from the original 561
 variable columns for each row of information. The resultant number needed was 62 columns for mean and
-standard deviation.  I then took the filtered names and renamed each columns of the combined dataset for test and train.  The final 62 variables with mean and standard deviation with column number are listed below: (the original dataset column number is offset by 2 to account for the two new columns added for subject number and activity type)
+standard deviation.  I then took the filtered names and renamed each columns of the combined dataset for test and train.  The final 62 
+variables with mean and standard deviation with column number are listed below: (the original dataset column number is offset by 2 to 
+account for the two new columns added for subject number and activity type)
 
 Column        Variable                        Units
 3         tBodyAcc-mean()-X           standard gravity units 'g'
@@ -175,16 +190,25 @@ Column        Variable                        Units
 Using this information I renamed the column headers in both the filtered test and train files for the subject number,
 activity type, and 62 filtered variable listed above for mean and standard deviation.
 
-Once these test and train datasets were filtered and columns renamed I merged the two datasets to form a combined final dataset for processing for mean and standard deviation.  I reordered the merged dataset on subject number and activity type to unify the datase related to those variables.  The subject number was selected first then I sorted on the activity type.
+Once these test and train datasets were filtered and columns renamed I merged the two datasets to form a combined final dataset for 
+processing for mean and standard deviation.  I reordered the merged dataset on subject number and activity type to unify the datase 
+related to those variables.  The subject number was selected first then I sorted on the activity type.
 
-We now have a merged dataset that we can process to find mean and standard deviation values related to the six activity types for each of the 30 subject numbers.
+We now have a merged dataset that we can process to find mean and standard deviation values related to the six activity types for each 
+of the 30 subject numbers.
 
-I used a for loop to process the mean and standard deviation each of the subject numbers during each loop. During each loop colMeans was run. Since colMeans only works on numberic data I need to remove the columns for subject number and activity type before running the mean.  However, colMeans created a single column of data and I then needed to transpose this information into 62 columns of data for each subject number run.  Once the data was transposed I recombined into a single data set for each of the six activity types for the given subject number.  Then I added back in the columns for subject number and activity type.
+I used a for loop to process the mean and standard deviation each of the subject numbers during each loop. During each loop colMeans 
+was run. Since colMeans only works on numberic data I need to remove the columns for subject number and activity type before running the
+mean.  However, colMeans created a single column of data and I then needed to transpose this information into 62 columns of data for
+each subject number run.  Once the data was transposed I recombined into a single data set for each of the six activity types for the 
+given subject number.  Then I added back in the columns for subject number and activity type.
 
 
 ##Final Tidy Data Set Created
 
-The resultant data created six rows for each subject number since there are six activities.  I used colMeans to find the overall values for each variable. This data was recursively written to a saved data file for each subject number 1-30. The resultand data file has the format for columns and rows shown below for a total of 64 columns and 180 rows:
+The resultant data created six rows for each subject number since there are six activities.  I used colMeans to find the overall values
+for each variable. This data was recursively written to a saved data file for each subject number 1-30. The resultand data file has the
+format for columns and rows shown below for a total of 64 columns and 180 rows:
 
   Column 1:              Column 2:                                           Columns 3-64:
 Subject Number         Activity Type                          calculated mean of each variable in column 
@@ -279,7 +303,8 @@ mergedBodyData - data created by combining filtered_Test and filtered_Train data
 
 ordered_Bodydata - data created by reordering mergedBodyData by subject number and activity type
 
-subjectDatai - data in loop for each subject number that contains only information for that subject number filtered down from the orderedBodyData data frame
+subjectDatai - data in loop for each subject number that contains only information for that subject number filtered down from the
+orderedBodyData data frame
 
 subjectLaying_i - filtered data from subjectData for only the LAYING rows of data
 subjectSitting_i - filtered data from subjectData for only the SITTING rows of data
@@ -302,9 +327,11 @@ transpose_subjectWalking_i - transpose colMean output back into 62 columns of WA
 transpose_subjectWalkingDown_i  - transpose colMean output back into 62 columns of WALKING DOWN data for each subject
 transpose_subjectWalkingUp_i - transpose colMean output back into 62 columns of WALKING UP each subject
 
-recombine_subjectData_i - data frame that merges all six transposed data frames (Laying, Sitting, Standing, Walking, Walking Downstairs, Walking Upstairs) listed above for each subject number
+recombine_subjectData_i - data frame that merges all six transposed data frames (Laying, Sitting, Standing, Walking, Walking Downstairs,
+Walking Upstairs) listed above for each subject number
 
-finalTidyMeanData_i - data set for during for loop to create data for each subject number for the final data set.  This data is combined with finaTidyDataSet in a recurive manner to create the final data set
+finalTidyMeanData_i - data set for during for loop to create data for each subject number for the final data set.  This data is combined
+with finaTidyDataSet in a recurive manner to create the final data set
 
 finalTidyDataSet - data set used to create final tidy data set that only shows mean and Std Dev for each subject and activity type  
 
