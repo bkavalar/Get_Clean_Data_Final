@@ -3,7 +3,7 @@
 #Prepared by B. Kavalar - 23 July 2017
 
 #set working directory
-setwd("C:/Project")
+setwd("C:/Backup/2017 IRAD/R Programming/JHU Data Science Course/Getting & Cleaning Data/Week 4/Project")
 
 #read in csv files for X, Y, and Subject Test that were imported into Excel from the provided UCI text files
 #x_test is the raw data results for each subject with 561 variables per row
@@ -16,8 +16,19 @@ Y_Test <- read.csv("./UCI HAR Dataset/test/y_test.csv")
 Sub_Test <- data.frame()
 Sub_Test <- read.csv("./UCI HAR Dataset/test/subject_test.csv")
 
-#test imported Y_Test to see format
-head(Y_Test)
+#read in features.csv converted from text and transpose data to create column names
+Features <- data.frame()
+Features <- read.csv("./UCI HAR Dataset/features.csv", check.names = FALSE, header = FALSE)
+
+#remove numeric characters before the space in each variable name
+Features <- sub(".+? ", "", Features$V1)
+
+#transform features files to create single row of data
+Features <- t(Features)
+write.csv(Features, "./UCI HAR Dataset/New Features.csv")
+
+#rename column names to match feature data file in X_Test
+colnames(X_Test) <- c(Features[1, 1:561])
 
 #replace column data in Y_test for descriptive names using the activity labels text file from UCI dataset
 #where:  1=WALKING, 2=WALKING_UPSTAIRS, 3=WALKING_DOWNSTAIRS, 4=SITTING, 5=STANDING, 6=LAYING
@@ -28,7 +39,7 @@ Y_Test$X5[Y_Test$X5 == 4] <- "SITTING"
 Y_Test$X5[Y_Test$X5 == 5] <- "STANDING"
 Y_Test$X5[Y_Test$X5 == 6] <- "LAYING"
 
-#column bind the three files imported above to create a new "imported test" file
+#column bind the three files created above to create a new "imported test" file
 imported_Test <- cbind(Y_Test, X_Test)
 imported_Test <- cbind(Sub_Test, imported_Test)
 
@@ -47,68 +58,6 @@ filtered_Test <- imported_Test[, c(1, 2, 3, 4, 5, 6, 7, 8, 43, 44, 45, 46, 47, 4
 #rename header in filtered columns to match data provided by UCI Dataset "features.txt" file
 names(filtered_Test)[1] <- "Subject_Number"
 names(filtered_Test)[2] <- "Activity"
-names(filtered_Test)[3] <- "tBodyAcc-mean()-X"
-names(filtered_Test)[4] <- "tBodyAcc-mean()-Y"
-names(filtered_Test)[5] <- "tBodyAcc-mean()-Z"
-names(filtered_Test)[6] <- "tBodyAcc-std()-X"
-names(filtered_Test)[7] <- "tBodyAcc-std()-Y"
-names(filtered_Test)[8] <- "tBodyAcc-std()-Z"
-names(filtered_Test)[9] <- "tGravityAcc-mean()-X"
-names(filtered_Test)[10] <- "tGravityAcc-mean()-Y"
-names(filtered_Test)[11] <- "tGravityAcc-mean()-Z"
-names(filtered_Test)[12] <- "tGravityAcc-std()-X"
-names(filtered_Test)[13] <- "tGravityAcc-std()-Y"
-names(filtered_Test)[14] <- "tGravityAcc-std()-Z"
-names(filtered_Test)[15] <- "tBodyAccJerk-mean()-X"
-names(filtered_Test)[16] <- "tBodyAccJerk-mean()-Y"
-names(filtered_Test)[17] <- "tBodyAccJerk-mean()-Z"
-names(filtered_Test)[18] <- "tBodyAccJerk-std()-X"
-names(filtered_Test)[19] <- "tBodyAccJerk-std()-Y"
-names(filtered_Test)[20] <- "tBodyAccJerk-std()-Z"
-names(filtered_Test)[21] <- "tBodyGyro-mean()-X"
-names(filtered_Test)[22] <- "tBodyGyro-mean()-Y"
-names(filtered_Test)[23] <- "tBodyGyro-mean()-Z"
-names(filtered_Test)[24] <- "tBodyGyro-std()-X"
-names(filtered_Test)[25] <- "tBodyGyro-std()-Y"
-names(filtered_Test)[26] <- "tBodyGyro-std()-Z"
-names(filtered_Test)[27] <- "tBodyGyroJerk-mean()-X"
-names(filtered_Test)[28] <- "tBodyGyroJerk-mean()-Y"
-names(filtered_Test)[29] <- "tBodyGyroJerk-mean()-Z"
-names(filtered_Test)[30] <- "tBodyGyroJerk-std()-X"
-names(filtered_Test)[31] <- "tBodyGyroJerk-std()-Y"
-names(filtered_Test)[32] <- "tBodyGyroJerk-std()-Z"
-names(filtered_Test)[33] <- "tBodyAccMag-mean()"
-names(filtered_Test)[34] <- "tBodyAccMag-std()"
-names(filtered_Test)[35] <- "tGravityAccMag-mean()"
-names(filtered_Test)[36] <- "tGravityAccMag-std()"
-names(filtered_Test)[37] <- "tBodyAccJerkMag-mean()"
-names(filtered_Test)[38] <- "tBodyAccJerkMag-std()"
-names(filtered_Test)[39] <- "tBodyGyroMag-mean()"
-names(filtered_Test)[40] <- "tBodyGyroMag-std()"
-names(filtered_Test)[41] <- "tBodyGyroJerkMag-mean()"
-names(filtered_Test)[42] <- "tBodyGyroJerkMag-std()"
-names(filtered_Test)[43] <- "fBodyAcc-mean()-X"
-names(filtered_Test)[44] <- "fBodyAcc-mean()-Y"
-names(filtered_Test)[45] <- "fBodyAcc-mean()-Z"
-names(filtered_Test)[46] <- "fBodyAcc-std()-X"
-names(filtered_Test)[47] <- "fBodyAcc-std()-Y"
-names(filtered_Test)[48] <- "fBodyAcc-std()-Z"
-names(filtered_Test)[49] <- "fBodyAccJerk-mean()-X"
-names(filtered_Test)[50] <- "fBodyAccJerk-mean()-Y"
-names(filtered_Test)[51] <- "fBodyAccJerk-mean()-Z"
-names(filtered_Test)[52] <- "fBodyAccJerk-std()-X"
-names(filtered_Test)[53] <- "fBodyAccJerk-std()-Y"
-names(filtered_Test)[54] <- "fBodyAccJerk-std()-Z"
-names(filtered_Test)[55] <- "fBodyGyro-mean()-X"
-names(filtered_Test)[56] <- "fBodyGyro-mean()-Y"
-names(filtered_Test)[57] <- "fBodyGyro-mean()-Z"
-names(filtered_Test)[58] <- "fBodyGyro-std()-X"
-names(filtered_Test)[59] <- "fBodyGyro-std()-Y"
-names(filtered_Test)[60] <- "fBodyGyro-std()-Z"
-names(filtered_Test)[61] <- "fBodyAccMag-mean()"
-names(filtered_Test)[62] <- "fBodyAccMag-std()"
-names(filtered_Test)[63] <- "fBodyBodyGyroMag-mean()"
-names(filtered_Test)[64] <- "fBodyBodyGyroMag-std()"
 
 #save filtered test data to a csv file to create a small data set prior to merging with train data
 write.csv(filtered_Test, file = "filtered_test.csv")
@@ -126,8 +75,8 @@ Y_Train <- read.csv("./UCI HAR Dataset/train/y_train.csv")
 Sub_Train <- data.frame()
 Sub_Train <- read.csv("./UCI HAR Dataset/train/subject_train.csv")
 
-#test imported Y_Test to see format
-head(Y_Train)
+#rename column names to match feature data file in X_Train
+colnames(X_Train) <- c(Features[1, 1:561])
 
 #rename column data in Y_test for descriptive names using the activity labels text file from UCI dataset
 #where:  1=WALKING, 2=WALKING_UPSTAIRS, 3=WALKING_DOWNSTAIRS, 4=SITTING, 5=STANDING, 6=LAYING
@@ -154,71 +103,9 @@ filtered_Train <- imported_Train [, c(1, 2, 3, 4, 5, 6, 7, 8, 43, 44, 45, 46, 47
                                    272, 273, 347, 348, 349, 350, 351, 352, 426, 427,
                                    428, 429, 430, 431, 505, 506, 531, 532)]
 
-#rename columns to match data provided by UCI Dataset "features.txt" file
+#add column nnames for subject number and activity
 names(filtered_Train)[1] <- "Subject_Number"
 names(filtered_Train)[2] <- "Activity"
-names(filtered_Train)[3] <- "tBodyAcc-mean()-X"
-names(filtered_Train)[4] <- "tBodyAcc-mean()-Y"
-names(filtered_Train)[5] <- "tBodyAcc-mean()-Z"
-names(filtered_Train)[6] <- "tBodyAcc-std()-X"
-names(filtered_Train)[7] <- "tBodyAcc-std()-Y"
-names(filtered_Train)[8] <- "tBodyAcc-std()-Z"
-names(filtered_Train)[9] <- "tGravityAcc-mean()-X"
-names(filtered_Train)[10] <- "tGravityAcc-mean()-Y"
-names(filtered_Train)[11] <- "tGravityAcc-mean()-Z"
-names(filtered_Train)[12] <- "tGravityAcc-std()-X"
-names(filtered_Train)[13] <- "tGravityAcc-std()-Y"
-names(filtered_Train)[14] <- "tGravityAcc-std()-Z"
-names(filtered_Train)[15] <- "tBodyAccJerk-mean()-X"
-names(filtered_Train)[16] <- "tBodyAccJerk-mean()-Y"
-names(filtered_Train)[17] <- "tBodyAccJerk-mean()-Z"
-names(filtered_Train)[18] <- "tBodyAccJerk-std()-X"
-names(filtered_Train)[19] <- "tBodyAccJerk-std()-Y"
-names(filtered_Train)[20] <- "tBodyAccJerk-std()-Z"
-names(filtered_Train)[21] <- "tBodyGyro-mean()-X"
-names(filtered_Train)[22] <- "tBodyGyro-mean()-Y"
-names(filtered_Train)[23] <- "tBodyGyro-mean()-Z"
-names(filtered_Train)[24] <- "tBodyGyro-std()-X"
-names(filtered_Train)[25] <- "tBodyGyro-std()-Y"
-names(filtered_Train)[26] <- "tBodyGyro-std()-Z"
-names(filtered_Train)[27] <- "tBodyGyroJerk-mean()-X"
-names(filtered_Train)[28] <- "tBodyGyroJerk-mean()-Y"
-names(filtered_Train)[29] <- "tBodyGyroJerk-mean()-Z"
-names(filtered_Train)[30] <- "tBodyGyroJerk-std()-X"
-names(filtered_Train)[31] <- "tBodyGyroJerk-std()-Y"
-names(filtered_Train)[32] <- "tBodyGyroJerk-std()-Z"
-names(filtered_Train)[33] <- "tBodyAccMag-mean()"
-names(filtered_Train)[34] <- "tBodyAccMag-std()"
-names(filtered_Train)[35] <- "tGravityAccMag-mean()"
-names(filtered_Train)[36] <- "tGravityAccMag-std()"
-names(filtered_Train)[37] <- "tBodyAccJerkMag-mean()"
-names(filtered_Train)[38] <- "tBodyAccJerkMag-std()"
-names(filtered_Train)[39] <- "tBodyGyroMag-mean()"
-names(filtered_Train)[40] <- "tBodyGyroMag-std()"
-names(filtered_Train)[41] <- "tBodyGyroJerkMag-mean()"
-names(filtered_Train)[42] <- "tBodyGyroJerkMag-std()"
-names(filtered_Train)[43] <- "fBodyAcc-mean()-X"
-names(filtered_Train)[44] <- "fBodyAcc-mean()-Y"
-names(filtered_Train)[45] <- "fBodyAcc-mean()-Z"
-names(filtered_Train)[46] <- "fBodyAcc-std()-X"
-names(filtered_Train)[47] <- "fBodyAcc-std()-Y"
-names(filtered_Train)[48] <- "fBodyAcc-std()-Z"
-names(filtered_Train)[49] <- "fBodyAccJerk-mean()-X"
-names(filtered_Train)[50] <- "fBodyAccJerk-mean()-Y"
-names(filtered_Train)[51] <- "fBodyAccJerk-mean()-Z"
-names(filtered_Train)[52] <- "fBodyAccJerk-std()-X"
-names(filtered_Train)[53] <- "fBodyAccJerk-std()-Y"
-names(filtered_Train)[54] <- "fBodyAccJerk-std()-Z"
-names(filtered_Train)[55] <- "fBodyGyro-mean()-X"
-names(filtered_Train)[56] <- "fBodyGyro-mean()-Y"
-names(filtered_Train)[57] <- "fBodyGyro-mean()-Z"
-names(filtered_Train)[58] <- "fBodyGyro-std()-X"
-names(filtered_Train)[59] <- "fBodyGyro-std()-Y"
-names(filtered_Train)[60] <- "fBodyGyro-std()-Z"
-names(filtered_Train)[61] <- "fBodyAccMag-mean()"
-names(filtered_Train)[62] <- "fBodyAccMag-std()"
-names(filtered_Train)[63] <- "fBodyBodyGyroMag-mean()"
-names(filtered_Train)[64] <- "fBodyBodyGyroMag-std()"
 
 #save filtered train data to a csv file for inspection prior to merging with test data
 write.csv(filtered_Train, file = "filtered_train.csv")

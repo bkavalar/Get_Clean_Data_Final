@@ -104,7 +104,7 @@ I then performed a cbind on the three dataset files X, Y, and Subject for test a
 I then inspected the UCI dataset features.txt file to understand what variables were only related to mean and 
 standard deviation.  I made a list of what column number cooresponded to those variables from the original 561
 variable columns for each row of information. The resultant number needed was 62 columns for mean and
-standard deviation.  I then took the filtered names and renamed each columns of the combined dataset for test and train.  The final 62 variables with mean and standard deviation with column number are listed below: (the original dataset column number is offset by 2 to account for the two new columns added for subject number and activity type)
+standard deviation.  I then took the filtered names and renamed each columns of the X_Test and Train datasets.  The final 62 variables with mean and standard deviation with column number are listed below: (the original dataset column number is offset by 2 to account for the two new columns added for subject number and activity type)
 
 | Column   |     Variable       |                 Units
 | 3        | tBodyAcc-mean()-X  |         standard gravity units 'g'
@@ -169,8 +169,8 @@ standard deviation.  I then took the filtered names and renamed each columns of 
 | 531      | fBodyBodyGyroMag-mean()  |         radians/second
 | 532      | fBodyBodyGyroMag-std()   |         radians/second
 
-Using this information I renamed the column headers in both the filtered test and train files for the subject number,
-activity type, and 62 filtered variable listed above for mean and standard deviation.
+I then renamed the column headers in both the filtered test and train files for the subject number,
+activity type.
 
 Once these test and train datasets were filtered and columns renamed I merged the two datasets to form a combined final dataset for processing for mean and standard deviation.  I reordered the merged dataset on subject number and activity type to unify the datase related to those variables.  The subject number was selected first then I sorted on the activity type.
 
@@ -262,6 +262,8 @@ The data was saved to a file called "finalTidyDataSet.csv" for later inspection.
 - X_Train: data with 561 columns data for each train row that corresponds to the Y_Train data and Sub_Train data
 - Y_Train: data with single column of data for each activity type on each data sample
 - Sub_Train: data with single column of data subject numbers for each data sample
+
+- Features: data with single row of data from the features.txt file with numeric values removed
 
 - imported_Test: data with combined data from X_Test, Y_Test, and Sub_Test
 - imported_Train: data with combined data from X_Train, Y_Train, and Sub_Train
