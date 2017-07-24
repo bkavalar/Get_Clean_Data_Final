@@ -7,18 +7,27 @@ Review criteriaReview criteria
  
 1.	The submitted data set is tidy. 
 2.	The Github repo contains the required scripts.
-3.	GitHub contains a code book that modifies and updates the available codebooks with the data to indicate all the 
+3.	GitHub contains a code book that modifies and updates the available codebooks with the data to indicate all the
 variables and summaries calculated, along with units, and any other relevant information.
 4.	The README that explains the analysis files is clear and understandable.
 5.	The work submitted for this project is the work of the student who submitted it.
 
 Getting and Cleaning Data Course Project 
-The purpose of this project is to demonstrate your ability to collect, work with, and clean a data set. The goal is to prepare tidy data that can be used for later analysis. You will be graded by your peers on a series of yes/no questions related to the project. You will be required to submit: 1) a tidy data set as described below, 2) a link to a Github repository with your script for performing the analysis, and 3) a code book that describes the variables, the data, and any transformations or work that you performed to clean up the data called CodeBook.md. You should also include a README.md in the repo with your scripts. This repo explains how all of the scripts work and how they are connected.
+The purpose of this project is to demonstrate your ability to collect, work with, and clean a data set. The goal
+is to prepare tidy data that can be used for later analysis. You will be graded by your peers on a series of
+yes/no questions related to the project. You will be required to submit: 1) a tidy data set as described below, 2)
+a link to a Github repository with your script for performing the analysis, and 3) a code book that describes the
+variables, the data, and any transformations or work that you performed to clean up the data called CodeBook.md.
+You should also include a README.md in the repo with your scripts. This repo explains how all of the scripts work
+and how they are connected.
 
 One of the most exciting areas in all of data science right now is wearable computing - see for example
 http://www.insideactivitytracking.com/data-science-activity-tracking-and-the-battle-for-the-worlds-top-sports-brand/
 
-Companies like Fitbit, Nike, and Jawbone Up are racing to develop the most advanced algorithms to attract new users. The data linked to from the course website represent data collected from the accelerometers from the Samsung Galaxy S smartphone. A full description is available at the site where the data was obtained:
+Companies like Fitbit, Nike, and Jawbone Up are racing to develop the most advanced algorithms to attract new users.
+The data linked to from the course website represent data collected from the accelerometers from the Samsung Galaxy S
+smartphone. A full description is available at the site where the data was obtained:
+
 http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones 
 
 The datasets are here for the project:
@@ -33,22 +42,24 @@ Need to create one R script called run_analysis.R that does the following.
 
 
 ##Final Script File - run_analysis.R and Data Submitted
-
-The code below describes how I used the UCI dataset files, cleaned them, reordered and combined them,
-to create the final tidy dataset required by the assignment.  The Codebook.md file in this account 
-describes in detail the format of the final tidy dataset file and all the variables used.  The finalTidyDataset.csv
-is the output of the script used for this assignment.  The run_analysis.R file is a downloadedable file for use 
-in verifying the R script functions as described.  Note the directories in the .R file if you wish to run it to 
-import and export .csv files created from the UCI text files.
-
-#Final Project - Week 4 for Getting & Cleaning Data for JHU Data Science Course
+    
+The code below describes how I used the UCI dataset files, cleaned them, reordered and combined
+them, to create the final tidy dataset required by the assignment.  The Codebook.md file in this
+account describes in detail the format of the final tidy dataset file and all the variables
+used.  The finalTidyDataset.csv is the output of the script used for this assignment.  The
+run_analysis.R file is a downloadedable file for use in verifying the R script functions as
+described.  Note the directories in the .R file if you wish to run it to import and export .csv
+files created from the UCI text files.
+    
+    #Final Project - Week 4 for Getting & Cleaning Data for JHU Data Science Course
     #Getting and clearing data from the UCI for Human Activity Recognition Using Smartphones Dataset
-    #Prepared by B. Kavalar - 23 July 2017
+    #Prepared by B. Kavalar - 24 July 2017
     
     #set working directory
-    setwd("C:/Backup/2017 IRAD/R Programming/JHU Data Science Course/Getting & Cleaning Data/Week 4/Project")
+    setwd("C:/Getting & Cleaning Data/Week 4/Project")
     
-    #read in csv files for X, Y, and Subject Test that were imported into Excel from the provided UCI text files
+    #read in csv files for X, Y, and Subject Test that were imported into Excel from the provided
+    UCI text files
     #x_test is the raw data results for each subject with 561 variables per row
     #y_test show what activity was being performed during each sample per row
     #subject_test is the subject number in the sample run - 1-30 subjects (people)
@@ -59,21 +70,22 @@ import and export .csv files created from the UCI text files.
     Sub_Test <- data.frame()
     Sub_Test <- read.csv("./UCI HAR Dataset/test/subject_test.csv")
     
-    #read in features.csv converted from text and transpose data to create column names
+    #read in features.csv converted from text to create column names for X Test/Train dataset
     Features <- data.frame()
     Features <- read.csv("./UCI HAR Dataset/features.csv", check.names = FALSE, header = FALSE)
-
+    
     #remove numeric characters before the space in each variable name
     Features <- sub(".+? ", "", Features$V1)
     
-    #transform features file to create single row
+    #transform features file to create single row of data
     Features <- t(Features)
     write.csv(Features, "./UCI HAR Dataset/New Features.csv")
     
-    #rename column names to match feature data file in X_Test
+    #rename column names in X_Test to match feature data file
     colnames(X_Test) <- c(Features[1, 1:561])
     
-    #replace column data in Y_test for descriptive names using the activity labels text file from UCI dataset
+    #replace column data in Y_test for descriptive names using the activity labels text file from
+    UCI dataset
     #where:  1=WALKING, 2=WALKING_UPSTAIRS, 3=WALKING_DOWNSTAIRS, 4=SITTING, 5=STANDING, 6=LAYING
     Y_Test$X5[Y_Test$X5 == 1] <- "WALKING"
     Y_Test$X5[Y_Test$X5 == 2] <- "WALKING_UPSTAIRS"
@@ -89,8 +101,10 @@ import and export .csv files created from the UCI text files.
     #save merged data to a csv file to create a combined tidy data set for later inspection
     write.csv(imported_Test, file = "./UCI HAR Dataset/test/imported_test.csv")
     
-    #remove unneeded columns by only using mean and standard deviation columns along with activity & subject columns
-    #this reduces column variable data from 561 elements per measurement to only 62 needed for mean and std deviation
+    #remove unneeded columns by only using mean and standard deviation columns along with activity &
+    subject columns
+    #this reduces column variable data from 561 elements per measurement to only 62 needed for mean
+    and std deviation
     filtered_Test <- imported_Test[, c(1, 2, 3, 4, 5, 6, 7, 8, 43, 44, 45, 46, 47, 48, 83,
                                         84, 85, 86, 87, 88, 123, 124, 125, 126, 127, 128,
                                         163, 164, 165, 166, 167, 168, 203, 204, 216, 217,
@@ -102,12 +116,14 @@ import and export .csv files created from the UCI text files.
     names(filtered_Test)[1] <- "Subject_Number"
     names(filtered_Test)[2] <- "Activity"
     
-    #save filtered test data to a csv file to create a small data set prior to merging with train data
+    #save filtered test data to a csv file to create a small data set prior to merging with train
+    data
     write.csv(filtered_Test, file = "filtered_test.csv")
     
     #repeat process for training data set
     
-    #read in csv files for X, Y, and Subject Train that were imported into Excel from the provided UCI text files
+    #read in csv files for X, Y, and Subject Train that were imported into Excel from the provided
+    UCI text files
     #x_train is the raw data results for each subject with 561 variables per row
     #y_train show what activity was being performed during each sample per row
     #subject_train is the subject number in the sample run - 1-30 subjects (people)
@@ -121,7 +137,8 @@ import and export .csv files created from the UCI text files.
     #rename column names to match feature data file in X_Train
     colnames(X_Train) <- c(Features[1, 1:561])
     
-    #rename column data in Y_test for descriptive names using the activity labels text file from UCI dataset
+    #rename column data in Y_test for descriptive names using the activity labels text file from UCI
+    dataset
     #where:  1=WALKING, 2=WALKING_UPSTAIRS, 3=WALKING_DOWNSTAIRS, 4=SITTING, 5=STANDING, 6=LAYING
     Y_Train$X5[Y_Train$X5 == 1] <- "WALKING"
     Y_Train$X5[Y_Train$X5 == 2] <- "WALKING_UPSTAIRS"
@@ -137,8 +154,10 @@ import and export .csv files created from the UCI text files.
     #save merged data to a csv file to create a combined tidy data set for later inspection
     write.csv(imported_Train, file = "./UCI HAR Dataset/train/imported_train.csv")
     
-    #remove unneeded columns by only using mean and standard deviation columns along with activity & subject columns
-    #this reduces column variable data from 561 elements per measurement to only 62 needed for mean and std deviation
+    #remove unneeded columns by only using mean and standard deviation columns along with activity &
+    subject columns
+    #this reduces column variable data from 561 elements per measurement to only 62 needed for mean
+    and std deviation
     filtered_Train <- imported_Train [, c(1, 2, 3, 4, 5, 6, 7, 8, 43, 44, 45, 46, 47, 48, 83,
                                        84, 85, 86, 87, 88, 123, 124, 125, 126, 127, 128,
                                        163, 164, 165, 166, 167, 168, 203, 204, 216, 217,

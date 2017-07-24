@@ -1,9 +1,9 @@
 #Final Project - Week 4 for Getting & Cleaning Data for JHU Data Science Course
 #Getting and clearing data from the UCI for Human Activity Recognition Using Smartphones Dataset
-#Prepared by B. Kavalar - 23 July 2017
+#Prepared by B. Kavalar - 24 July 2017
 
 #set working directory
-setwd("C:/Backup/2017 IRAD/R Programming/JHU Data Science Course/Getting & Cleaning Data/Week 4/Project")
+setwd("C:/Getting & Cleaning Data/Week 4/Project")
 
 #read in csv files for X, Y, and Subject Test that were imported into Excel from the provided UCI text files
 #x_test is the raw data results for each subject with 561 variables per row
@@ -16,18 +16,18 @@ Y_Test <- read.csv("./UCI HAR Dataset/test/y_test.csv")
 Sub_Test <- data.frame()
 Sub_Test <- read.csv("./UCI HAR Dataset/test/subject_test.csv")
 
-#read in features.csv converted from text and transpose data to create column names
+#read in features.csv converted from text to create column names for X Test/Train dataset
 Features <- data.frame()
 Features <- read.csv("./UCI HAR Dataset/features.csv", check.names = FALSE, header = FALSE)
 
 #remove numeric characters before the space in each variable name
 Features <- sub(".+? ", "", Features$V1)
 
-#transform features files to create single row of data
+#transform features file to create single row of data
 Features <- t(Features)
 write.csv(Features, "./UCI HAR Dataset/New Features.csv")
 
-#rename column names to match feature data file in X_Test
+#rename column names in X_Test to match feature data file
 colnames(X_Test) <- c(Features[1, 1:561])
 
 #replace column data in Y_test for descriptive names using the activity labels text file from UCI dataset
