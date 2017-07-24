@@ -160,7 +160,7 @@ column number is offset by 2 to account for the two new columns added for subjec
 | 217      | tGravityAccMag-std()     |   standard gravity units 'g'
 | 229      | tBodyAccJerkMag-mean()   |   standard gravity units 'g'
 | 230      | tBodyAccJerkMag-std()    |   standard gravity units 'g'
-| 242      | tBodyGyroMag-mean()      |        radians/second
+| 242      | tBodyGyroMag-mean()      |         radians/second
 | 243      | tBodyGyroMag-std()       |         radians/second
 | 255      | tBodyGyroJerkMag-mean()  |         radians/second
 | 256      | tBodyGyroJerkMag-std()   |         radians/second
@@ -170,22 +170,42 @@ column number is offset by 2 to account for the two new columns added for subjec
 | 271      | fBodyAcc-std()-X        |    standard gravity units 'g'
 | 272      | fBodyAcc-std()-Y        |    standard gravity units 'g'
 | 273      | fBodyAcc-std()-Z        |    standard gravity units 'g'
+| 296      | fBodyAcc-meanFreq()-X   |             Hertz
+| 297      | fBodyAcc-meanFreq()-Y   |             Hertz
+| 298      | fBodyAcc-meanFreq()-Z   |             Hertz
 | 347      | fBodyAccJerk-mean()-X   |    standard gravity units 'g'
 | 348      | fBodyAccJerk-mean()-Y   |    standard gravity units 'g'
 | 349      | fBodyAccJerk-mean()-Z   |    standard gravity units 'g'
 | 350      | fBodyAccJerk-std()-X    |    standard gravity units 'g'
 | 351      | fBodyAccJerk-std()-Y    |    standard gravity units 'g'
 | 352      | fBodyAccJerk-std()-Z    |    standard gravity units 'g'
+| 375      | fBodyAccJerk-meanFreq()-X  |           Hertz
+| 376      | fBodyAccJerk-meanFreq()-Y  |           Hertz
+| 377      | fBodyAccJerk-meanFreq()-Z  |           Hertz
 | 426      | fBodyGyro-mean()-X      |          radians/second
 | 427      | fBodyGyro-mean()-Y      |          radians/second
 | 428      | fBodyGyro-mean()-Z      |          radians/second
 | 429      | fBodyGyro-std()-X       |          radians/second
 | 430      | fBodyGyro-std()-Y       |          radians/second
 | 431      | fBodyGyro-std()-Z       |          radians/second
-| 505      | fBodyAccMag-mean()       |    standard gravity units 'g'
-| 506      | fBodyAccMag-std()        |    standard gravity units 'g'
+| 505      | fBodyAccMag-mean()        |    standard gravity units 'g'
+| 506      | fBodyAccMag-std()         |    standard gravity units 'g'
+| 518      | fBodyBodyAccJerkMag-mean()   |    standard gravity units 'g'
+| 519      | fBodyBodyAccJerkMag-std()    |    standard gravity units 'g'
+| 528      | fBodyBodyAccJerkMag-meanFreq()  |      Hertz
 | 531      | fBodyBodyGyroMag-mean()  |         radians/second
 | 532      | fBodyBodyGyroMag-std()   |         radians/second
+| 541      | fBodyBodyGyroMag-meanFreq()  |         Hertz
+| 544      | fBodyBodyGyroJerkMag-mean()  | standard gravity units 'g'
+| 545      | fBodyBodyGyroJerkMag-std()   | standard gravity units 'g'
+| 554      | fBodyBodyGyroJerkMag-meanFreq()    |   Hertz
+| 558      | angle(tBodyAccJerkMean),gravityMean) | radians/second
+| 559      | angle(tBodyGyroMean,gravityMean)     | radians/second
+| 560      | angle(tBodyGyroJerkMean,gravityMean) | radians/second
+| 561      | angle(X,gravityMean)   |               radians/second
+| 562      | angle(Y,gravityMean)   |               radians/second
+| 563      | angle(Z,gravityMean)   |               radians/second
+
 
 I then renamed the column headers in both the filtered test and train files for the subject number,
 activity type.
@@ -210,7 +230,7 @@ Then I added back in the columns for subject number and activity type.
 
 The resultant data created six rows for each subject number since there are six activities.  I used colMeans to
 find the overall values for each variable. This data was recursively written to a saved data file for each subject
-number 1-30. The resultand data file has the format for columns and rows shown below for a total of 64 columns and
+number 1-30. The resultand data file has the format for columns and rows shown below for a total of 83 columns and
 180 rows:
 
 |  Column 1:     |      Column 2:         |                             Columns 3-64:     
@@ -262,22 +282,41 @@ number 1-30. The resultand data file has the format for columns and rows shown b
 |                |                        | 46      |  fBodyAcc-std()-X         |   standard gravity units 'g' 
 |                |                        | 47      |  fBodyAcc-std()-Y         |   standard gravity units 'g'  
 |                |                        | 48      |  fBodyAcc-std()-Z         |   standard gravity units 'g' 
-|                |                        | 49      |  fBodyAccJerk-mean()-X    |   standard gravity units 'g'  
-|                |                        | 50      |  fBodyAccJerk-mean()-Y    |   standard gravity units 'g' 
-|                |                        | 51      |  fBodyAccJerk-mean()-Z    |   standard gravity units 'g' 
-|                |                        | 52      |  fBodyAccJerk-std()-X     |   standard gravity units 'g' 
-|                |                        | 53      |  fBodyAccJerk-std()-Y     |   standard gravity units 'g' 
-|                |                        | 54      |  fBodyAccJerk-std()-Z     |   standard gravity units 'g' 
-|                |                        | 55      |  fBodyGyro-mean()-X       |         radians/second  
-|                |                        | 56      |  fBodyGyro-mean()-Y       |         radians/second 
-|                |                        | 57      |  fBodyGyro-mean()-Z       |         radians/second 
-|                |                        | 58      |  fBodyGyro-std()-X        |         radians/second 
-|                |                        | 59      |  fBodyGyro-std()-Y        |         radians/second 
-|                |                        | 60      |  fBodyGyro-std()-Z        |         radians/second 
-|                |                        | 61      |  fBodyAccMag-mean()       |   standard gravity units 'g' 
-|                |                        | 62      |  fBodyAccMag-std()        |   standard gravity units 'g' 
-|                |                        | 63      |  fBodyBodyGyroMag-mean()  |         radians/second 
-|                |                        | 64      |  fBodyBodyGyroMag-std()   |         radians/second 
+|                |                        | 49      |  fBodyAcc-meanFreq()-X     |             Hertz
+|                |                        | 50      |  fBodyAcc-meanFreq()-Y     |             Hertz
+|                |                        | 51      |  fBodyAcc-meanFreq()-Z     |             Hertz
+|                |                        | 52      |  fBodyAccJerk-mean()-X    |   standard gravity units 'g'  
+|                |                        | 53      |  fBodyAccJerk-mean()-Y    |   standard gravity units 'g' 
+|                |                        | 54      |  fBodyAccJerk-mean()-Z    |   standard gravity units 'g' 
+|                |                        | 55      |  fBodyAccJerk-std()-X     |   standard gravity units 'g' 
+|                |                        | 56      |  fBodyAccJerk-std()-Y     |   standard gravity units 'g' 
+|                |                        | 57      |  fBodyAccJerk-std()-Z     |   standard gravity units 'g'
+|                |                        | 58      |  fBodyAccJerk-meanFreq()-X  |             Hertz
+|                |                        | 59      |  fBodyAccJerk-meanFreq()-Y  |             Hertz
+|                |                        | 60      |  fBodyAccJerk-meanFreq()-Z  |             Hertz
+|                |                        | 61      |  fBodyGyro-mean()-X       |         radians/second  
+|                |                        | 62      |  fBodyGyro-mean()-Y       |         radians/second 
+|                |                        | 63      |  fBodyGyro-mean()-Z       |         radians/second 
+|                |                        | 64      |  fBodyGyro-std()-X        |         radians/second 
+|                |                        | 65      |  fBodyGyro-std()-Y        |         radians/second 
+|                |                        | 66      |  fBodyGyro-std()-Z        |         radians/second 
+|                |                        | 67      |  fBodyAccMag-mean()       |   standard gravity units 'g' 
+|                |                        | 68      |  fBodyAccMag-std()        |   standard gravity units 'g'
+|                |                        | 69      | fBodyBodyAccJerkMag-mean()   |    standard gravity units 'g'
+|                |                        | 70      | fBodyBodyAccJerkMag-std()    |    standard gravity units 'g'
+|                |                        | 71      | fBodyBodyAccJerkMag-meanFreq()  |      Hertz
+|                |                        | 72      |  fBodyBodyGyroMag-mean()  |         radians/second 
+|                |                        | 73      |  fBodyBodyGyroMag-std()   |         radians/second
+|                |                        | 74      | fBodyBodyGyroMag-meanFreq()  |         Hertz
+|                |                        | 75      | fBodyBodyGyroJerkMag-mean()  | standard gravity units 'g'
+|                |                        | 76      | fBodyBodyGyroJerkMag-std()   | standard gravity units 'g'
+|                |                        | 77      | fBodyBodyGyroJerkMag-meanFreq()    |   Hertz
+|                |                        | 78      | angle(tBodyAccJerkMean),gravityMean) | radians/second
+|                |                        | 79      | angle(tBodyGyroMean,gravityMean)     | radians/second
+|                |                        | 80      | angle(tBodyGyroJerkMean,gravityMean) | radians/second
+|                |                        | 81      | angle(X,gravityMean)   |               radians/second
+|                |                        | 82      | angle(Y,gravityMean)   |               radians/second
+|                |                        | 83      | angle(Z,gravityMean)   |               radians/second
               
 
 The data was saved to a file called "finalTidyDataSet.csv" for later inspection.

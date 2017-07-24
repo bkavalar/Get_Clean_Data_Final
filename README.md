@@ -101,16 +101,17 @@ files created from the UCI text files.
     #save merged data to a csv file to create a combined tidy data set for later inspection
     write.csv(imported_Test, file = "./UCI HAR Dataset/test/imported_test.csv")
     
-    #remove unneeded columns by only using mean and standard deviation columns along with activity &
-    subject columns
-    #this reduces column variable data from 561 elements per measurement to only 62 needed for mean
-    and std deviation
+    #remove unneeded columns by only using mean and standard deviation columns along with activity & subject columns
+    #this reduces column variable data from 561 elements per measurement to only those needed for mean and std
+    deviation
     filtered_Test <- imported_Test[, c(1, 2, 3, 4, 5, 6, 7, 8, 43, 44, 45, 46, 47, 48, 83,
                                         84, 85, 86, 87, 88, 123, 124, 125, 126, 127, 128,
                                         163, 164, 165, 166, 167, 168, 203, 204, 216, 217,
                                         229, 230, 242, 243, 255, 256, 268, 269, 270, 271,
-                                        272, 273, 347, 348, 349, 350, 351, 352, 426, 427,
-                                        428, 429, 430, 431, 505, 506, 531, 532)]
+                                        272, 273, 296, 297, 298, 347, 348, 349, 350, 351, 
+                                        352, 375, 376, 377, 426, 427, 428, 429, 430, 431, 
+                                        505, 506, 518, 519, 528, 531, 532, 541, 544, 545,
+                                        554, 558, 559, 560, 561, 562, 563)]
     
     #rename header in filtered columns to match data provided by UCI Dataset "features.txt" file
     names(filtered_Test)[1] <- "Subject_Number"
@@ -154,16 +155,17 @@ files created from the UCI text files.
     #save merged data to a csv file to create a combined tidy data set for later inspection
     write.csv(imported_Train, file = "./UCI HAR Dataset/train/imported_train.csv")
     
-    #remove unneeded columns by only using mean and standard deviation columns along with activity &
-    subject columns
-    #this reduces column variable data from 561 elements per measurement to only 62 needed for mean
-    and std deviation
-    filtered_Train <- imported_Train [, c(1, 2, 3, 4, 5, 6, 7, 8, 43, 44, 45, 46, 47, 48, 83,
+    #remove unneeded columns by only using mean and standard deviation columns along with activity & subject columns
+    #this reduces column variable data from 561 elements per measurement to only those needed for mean and std
+    deviation
+    filtered_Train <- imported_Train[, c(1, 2, 3, 4, 5, 6, 7, 8, 43, 44, 45, 46, 47, 48, 83,
                                        84, 85, 86, 87, 88, 123, 124, 125, 126, 127, 128,
                                        163, 164, 165, 166, 167, 168, 203, 204, 216, 217,
                                        229, 230, 242, 243, 255, 256, 268, 269, 270, 271,
-                                       272, 273, 347, 348, 349, 350, 351, 352, 426, 427,
-                                       428, 429, 430, 431, 505, 506, 531, 532)]
+                                       272, 273, 296, 297, 298, 347, 348, 349, 350, 351, 
+                                       352, 375, 376, 377, 426, 427, 428, 429, 430, 431, 
+                                       505, 506, 518, 519, 528, 531, 532, 541, 544, 545,
+                                       554, 558, 559, 560, 561, 562, 563)]
     
     #add column nnames for subject number and activity
     names(filtered_Train)[1] <- "Subject_Number"
