@@ -1,6 +1,6 @@
 #Final Project - Week 4 for Getting & Cleaning Data for JHU Data Science Course
 #Getting and clearing data from the UCI for Human Activity Recognition Using Smartphones Dataset
-#Prepared by B. Kavalar - 24 July 2017
+#Prepared by B. Kavalar - 25 July 2017
 
 #set working directory
 setwd("C:/Getting & Cleaning Data/Week 4/Project")
@@ -30,6 +30,9 @@ write.csv(Features, "./UCI HAR Dataset/New Features.csv")
 #rename column names in X_Test to match feature data file
 colnames(X_Test) <- c(Features[1, 1:561])
 
+#subset and filter for columns with only mean, Mean, std, or Std in column names
+filtered_Test <- X_Test[,grepl("mean|Mean|std|Std", names(X_Test))]
+
 #replace column data in Y_test for descriptive names using the activity labels text file from UCI dataset
 #where:  1=WALKING, 2=WALKING_UPSTAIRS, 3=WALKING_DOWNSTAIRS, 4=SITTING, 5=STANDING, 6=LAYING
 Y_Test$X5[Y_Test$X5 == 1] <- "WALKING"
@@ -40,29 +43,18 @@ Y_Test$X5[Y_Test$X5 == 5] <- "STANDING"
 Y_Test$X5[Y_Test$X5 == 6] <- "LAYING"
 
 #column bind the three files created above to create a new "imported test" file
-imported_Test <- cbind(Y_Test, X_Test)
+imported_Test <- cbind(Y_Test, filtered_Test)
 imported_Test <- cbind(Sub_Test, imported_Test)
 
 #save merged data to a csv file to create a combined tidy data set for later inspection
 write.csv(imported_Test, file = "./UCI HAR Dataset/test/imported_test.csv")
 
-#remove unneeded columns by only using mean and standard deviation columns along with activity & subject columns
-#this reduces column variable data from 561 elements per measurement to only those needed for mean and std deviation
-filtered_Test <- imported_Test[, c(1, 2, 3, 4, 5, 6, 7, 8, 43, 44, 45, 46, 47, 48, 83,
-                                    84, 85, 86, 87, 88, 123, 124, 125, 126, 127, 128,
-                                    163, 164, 165, 166, 167, 168, 203, 204, 216, 217,
-                                    229, 230, 242, 243, 255, 256, 268, 269, 270, 271,
-                                    272, 273, 296, 297, 298, 347, 348, 349, 350, 351, 
-                                    352, 375, 376, 377, 426, 427, 428, 429, 430, 431, 
-                                    505, 506, 518, 519, 528, 531, 532, 541, 544, 545,
-                                    554, 558, 559, 560, 561, 562, 563)]
-
 #rename header in filtered columns to match data provided by UCI Dataset "features.txt" file
-names(filtered_Test)[1] <- "Subject_Number"
-names(filtered_Test)[2] <- "Activity"
+names(imported_Test)[1] <- "Subject_Number"
+names(imported_Test)[2] <- "Activity"
 
 #save filtered test data to a csv file to create a small data set prior to merging with train data
-write.csv(filtered_Test, file = "filtered_test.csv")
+write.csv(imported_Test, file = "imported_test.csv")
 
 #repeat process for training data set
 
@@ -74,11 +66,16 @@ X_Train <- data.frame()
 X_Train <- read.csv("./UCI HAR Dataset/train/x_train.csv")
 Y_Train <- data.frame()
 Y_Train <- read.csv("./UCI HAR Dataset/train/y_train.csv")
+
+#subset and filter for columns with only mean or std in column names
 Sub_Train <- data.frame()
 Sub_Train <- read.csv("./UCI HAR Dataset/train/subject_train.csv")
 
 #rename column names to match feature data file in X_Train
 colnames(X_Train) <- c(Features[1, 1:561])
+
+#subset and filter for columns with only mean or std in column names
+filtered_Train <- X_Train[,grepl("mean|Mean|std|Std", names(X_Train))]
 
 #rename column data in Y_test for descriptive names using the activity labels text file from UCI dataset
 #where:  1=WALKING, 2=WALKING_UPSTAIRS, 3=WALKING_DOWNSTAIRS, 4=SITTING, 5=STANDING, 6=LAYING
@@ -89,33 +86,23 @@ Y_Train$X5[Y_Train$X5 == 4] <- "SITTING"
 Y_Train$X5[Y_Train$X5 == 5] <- "STANDING"
 Y_Train$X5[Y_Train$X5 == 6] <- "LAYING"
 
-#column bind the three files imported above to create a new "imported train" file
-imported_Train <- cbind(Y_Train, X_Train)
+#column bind the three files created above to create a new "imported test" file
+imported_Train <- cbind(Y_Train, filtered_Train)
 imported_Train <- cbind(Sub_Train, imported_Train)
 
 #save merged data to a csv file to create a combined tidy data set for later inspection
 write.csv(imported_Train, file = "./UCI HAR Dataset/train/imported_train.csv")
 
-#remove unneeded columns by only using mean and standard deviation columns along with activity & subject columns
-#this reduces column variable data from 561 elements per measurement to only those needed for mean and std deviation
-filtered_Train <- imported_Train[, c(1, 2, 3, 4, 5, 6, 7, 8, 43, 44, 45, 46, 47, 48, 83,
-                                   84, 85, 86, 87, 88, 123, 124, 125, 126, 127, 128,
-                                   163, 164, 165, 166, 167, 168, 203, 204, 216, 217,
-                                   229, 230, 242, 243, 255, 256, 268, 269, 270, 271,
-                                   272, 273, 296, 297, 298, 347, 348, 349, 350, 351, 
-                                   352, 375, 376, 377, 426, 427, 428, 429, 430, 431, 
-                                   505, 506, 518, 519, 528, 531, 532, 541, 544, 545,
-                                   554, 558, 559, 560, 561, 562, 563)]
+#rename header in filtered columns to match data provided by UCI Dataset "features.txt" file
+names(imported_Train)[1] <- "Subject_Number"
+names(imported_Train)[2] <- "Activity"
 
-#add column nnames for subject number and activity
-names(filtered_Train)[1] <- "Subject_Number"
-names(filtered_Train)[2] <- "Activity"
+#save filtered test data to a csv file to create a small data set prior to merging with train data
+write.csv(imported_Train, file = "imported_train.csv")
 
-#save filtered train data to a csv file for inspection prior to merging with test data
-write.csv(filtered_Train, file = "filtered_train.csv")
-
-#merge filtered test and training data sets using rbind function into single tidy dataset
-mergedBodyData <- rbind(filtered_Test, filtered_Train)
+#merge data sets but ensure we only use common columns names to avoid issues with rbind
+cols <- intersect(colnames(imported_Test), colnames(imported_Train))
+mergedBodyData <- rbind(imported_Test[,cols], imported_Train[,cols])
 
 #save merged data to a csv file for later inspection
 write.csv(mergedBodyData, file = "merged_bodydata.csv")
@@ -160,7 +147,6 @@ subjectWalkingDown_i = subjectWalkingDown_i[, -1]
 subjectWalkingDown_i = subjectWalkingDown_i[, -1]
 subjectWalkingUp_i = subjectWalkingUp_i[, -1]
 subjectWalkingUp_i = subjectWalkingUp_i[, -1]
-
 
 #calculate the means for each column for the dataset broken down by activity type
 #perform required calculations on columns - run colMeans

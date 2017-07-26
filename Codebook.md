@@ -109,6 +109,11 @@ I read files for X, Y, and Subject Test into Excel from the provided UCI text fi
 
 These files were saved as csv files for easier processing in R.
 
+I then read in the features file provided by UCI.  I then used expressions to remove leading numbers from
+the feature names and used this add correct column names to the X_Test and X_Train files.
+
+I then subsetted / filtered the X_Test and X_Train files to only use columns with mean or std in the name.
+
 Next I used the UCI activity lables.txt to rename the Y_Test and Y_Train column data to more descriptive 
 names in the activity labels files. This resulted in using descriptive names using the activity labels 
 where:  1=WALKING, 2=WALKING_UPSTAIRS, 3=WALKING_DOWNSTAIRS, 4=SITTING, 5=STANDING, 6=LAYING so it was
@@ -116,96 +121,6 @@ easier to understand the data later.
 
 I then performed a cbind on the three dataset files X, Y, and Subject for test and train into a single files for
 test and train later processing.
-
-I then inspected the UCI dataset features.txt file to understand what variables were only related to mean and 
-standard deviation.  I made a list of what column number cooresponded to those variables from the original 561
-variable columns for each row of information. The resultant number needed was 62 columns for mean and
-standard deviation.  I then took the filtered names and renamed each columns of the X_Test and Train datasets.
-The final 62 variables with mean and standard deviation with column number are listed below: (the original dataset
-column number is offset by 2 to account for the two new columns added for subject number and activity type)
-
-| Column   |     Variable       |                 Units
-| 3        | tBodyAcc-mean()-X  |         standard gravity units 'g'
-| 5        | tBodyAcc-mean()-Z  |         standard gravity units 'g'
-| 6        | tBodyAcc-std()-X   |         standard gravity units 'g'
-| 7        | tBodyAcc-std()-Y   |         standard gravity units 'g'
-| 8        | tBodyAcc-std()-Z    |        standard gravity units 'g'
-| 43       | tGravityAcc-mean()-X  |      standard gravity units 'g'
-| 44       | tGravityAcc-mean()-Y  |      standard gravity units 'g'
-| 45       | tGravityAcc-mean()-Z  |      standard gravity units 'g'
-| 46       | tGravityAcc-std()-X   |      standard gravity units 'g'
-| 47       | tGravityAcc-std()-Y   |      standard gravity units 'g'
-| 48       | tGravityAcc-std()-Z   |      standard gravity units 'g'
-| 83       | tBodyAccJerk-mean()-X   |    standard gravity units 'g'
-| 84       | tBodyAccJerk-mean()-Y   |    standard gravity units 'g'
-| 85       | tBodyAccJerk-mean()-Z   |    standard gravity units 'g'
-| 86       | tBodyAccJerk-std()-X   |     standard gravity units 'g'
-| 87       | tBodyAccJerk-std()-Y   |     standard gravity units 'g'
-| 88       | tBodyAccJerk-std()-Z   |     standard gravity units 'g'
-| 123      | tBodyGyro-mean()-X     |           radians/second
-| 124      | tBodyGyro-mean()-Y     |           radians/second
-| 125      | tBodyGyro-mean()-Z     |           radians/second
-| 126      | tBodyGyro-std()-X      |           radians/second
-| 127      | tBodyGyro-std()-Y       |          radians/second
-| 128      | tBodyGyro-std()-Z       |          radians/second
-| 163      | tBodyGyroJerk-mean()-X   |         radians/second
-| 164      | tBodyGyroJerk-mean()-Y   |         radians/second
-| 165      | tBodyGyroJerk-mean()-Z   |         radians/second
-| 166      | tBodyGyroJerk-std()-X    |         radians/second
-| 167      | tBodyGyroJerk-std()-Y    |         radians/second
-| 168      | tBodyGyroJerk-std()-Z    |         radians/second
-| 203      | tBodyAccMag-mean()       |   standard gravity units 'g'
-| 204      | tBodyAccMag-std()        |   standard gravity units 'g'
-| 216      | tGravityAccMag-mean()    |   standard gravity units 'g'
-| 217      | tGravityAccMag-std()     |   standard gravity units 'g'
-| 229      | tBodyAccJerkMag-mean()   |   standard gravity units 'g'
-| 230      | tBodyAccJerkMag-std()    |   standard gravity units 'g'
-| 242      | tBodyGyroMag-mean()      |         radians/second
-| 243      | tBodyGyroMag-std()       |         radians/second
-| 255      | tBodyGyroJerkMag-mean()  |         radians/second
-| 256      | tBodyGyroJerkMag-std()   |         radians/second
-| 268      | fBodyAcc-mean()-X       |    standard gravity units 'g'
-| 269      | fBodyAcc-mean()-Y       |    standard gravity units 'g'
-| 270      | fBodyAcc-mean()-Z       |    standard gravity units 'g'
-| 271      | fBodyAcc-std()-X        |    standard gravity units 'g'
-| 272      | fBodyAcc-std()-Y        |    standard gravity units 'g'
-| 273      | fBodyAcc-std()-Z        |    standard gravity units 'g'
-| 296      | fBodyAcc-meanFreq()-X   |             Hertz
-| 297      | fBodyAcc-meanFreq()-Y   |             Hertz
-| 298      | fBodyAcc-meanFreq()-Z   |             Hertz
-| 347      | fBodyAccJerk-mean()-X   |    standard gravity units 'g'
-| 348      | fBodyAccJerk-mean()-Y   |    standard gravity units 'g'
-| 349      | fBodyAccJerk-mean()-Z   |    standard gravity units 'g'
-| 350      | fBodyAccJerk-std()-X    |    standard gravity units 'g'
-| 351      | fBodyAccJerk-std()-Y    |    standard gravity units 'g'
-| 352      | fBodyAccJerk-std()-Z    |    standard gravity units 'g'
-| 375      | fBodyAccJerk-meanFreq()-X  |           Hertz
-| 376      | fBodyAccJerk-meanFreq()-Y  |           Hertz
-| 377      | fBodyAccJerk-meanFreq()-Z  |           Hertz
-| 426      | fBodyGyro-mean()-X      |          radians/second
-| 427      | fBodyGyro-mean()-Y      |          radians/second
-| 428      | fBodyGyro-mean()-Z      |          radians/second
-| 429      | fBodyGyro-std()-X       |          radians/second
-| 430      | fBodyGyro-std()-Y       |          radians/second
-| 431      | fBodyGyro-std()-Z       |          radians/second
-| 505      | fBodyAccMag-mean()        |    standard gravity units 'g'
-| 506      | fBodyAccMag-std()         |    standard gravity units 'g'
-| 518      | fBodyBodyAccJerkMag-mean()   |    standard gravity units 'g'
-| 519      | fBodyBodyAccJerkMag-std()    |    standard gravity units 'g'
-| 528      | fBodyBodyAccJerkMag-meanFreq()  |      Hertz
-| 531      | fBodyBodyGyroMag-mean()  |         radians/second
-| 532      | fBodyBodyGyroMag-std()   |         radians/second
-| 541      | fBodyBodyGyroMag-meanFreq()  |         Hertz
-| 544      | fBodyBodyGyroJerkMag-mean()  | standard gravity units 'g'
-| 545      | fBodyBodyGyroJerkMag-std()   | standard gravity units 'g'
-| 554      | fBodyBodyGyroJerkMag-meanFreq()    |   Hertz
-| 558      | angle(tBodyAccJerkMean),gravityMean) | radians/second
-| 559      | angle(tBodyGyroMean,gravityMean)     | radians/second
-| 560      | angle(tBodyGyroJerkMean,gravityMean) | radians/second
-| 561      | angle(X,gravityMean)   |               radians/second
-| 562      | angle(Y,gravityMean)   |               radians/second
-| 563      | angle(Z,gravityMean)   |               radians/second
-
 
 I then renamed the column headers in both the filtered test and train files for the subject number,
 activity type.
@@ -221,7 +136,7 @@ activity types for each of the 30 subject numbers.
 I used a for loop to process the mean and standard deviation each of the subject numbers during each loop. During
 each loop colMeans was run. Since colMeans only works on numberic data I need to remove the columns for subject
 number and activity type before running the mean.  However, colMeans created a single column of data and I then
-needed to transpose this information into 62 columns of data for each subject number run.  Once the data was
+needed to transpose this information into required columns of data for each subject number run.  Once the data was
 transposed I recombined into a single data set for each of the six activity types for the given subject number.
 Then I added back in the columns for subject number and activity type.
 
@@ -230,8 +145,7 @@ Then I added back in the columns for subject number and activity type.
 
 The resultant data created six rows for each subject number since there are six activities.  I used colMeans to
 find the overall values for each variable. This data was recursively written to a saved data file for each subject
-number 1-30. The resultand data file has the format for columns and rows shown below for a total of 83 columns and
-180 rows:
+number 1-30. The resultand data file has the format for columns and rows shown below with 180 rows of data:
 
 |  Column 1:     |      Column 2:         |                             Columns 3-64:     
 | Subject Number |    Activity Types      |                            Calculated Mean
@@ -300,23 +214,28 @@ number 1-30. The resultand data file has the format for columns and rows shown b
 |                |                        | 64      |  fBodyGyro-std()-X        |         radians/second 
 |                |                        | 65      |  fBodyGyro-std()-Y        |         radians/second 
 |                |                        | 66      |  fBodyGyro-std()-Z        |         radians/second 
-|                |                        | 67      |  fBodyAccMag-mean()       |   standard gravity units 'g' 
-|                |                        | 68      |  fBodyAccMag-std()        |   standard gravity units 'g'
-|                |                        | 69      | fBodyBodyAccJerkMag-mean()   |    standard gravity units 'g'
-|                |                        | 70      | fBodyBodyAccJerkMag-std()    |    standard gravity units 'g'
-|                |                        | 71      | fBodyBodyAccJerkMag-meanFreq()  |      Hertz
-|                |                        | 72      |  fBodyBodyGyroMag-mean()  |         radians/second 
-|                |                        | 73      |  fBodyBodyGyroMag-std()   |         radians/second
-|                |                        | 74      | fBodyBodyGyroMag-meanFreq()  |         Hertz
-|                |                        | 75      | fBodyBodyGyroJerkMag-mean()  | standard gravity units 'g'
-|                |                        | 76      | fBodyBodyGyroJerkMag-std()   | standard gravity units 'g'
-|                |                        | 77      | fBodyBodyGyroJerkMag-meanFreq()    |   Hertz
-|                |                        | 78      | angle(tBodyAccJerkMean),gravityMean) | radians/second
-|                |                        | 79      | angle(tBodyGyroMean,gravityMean)     | radians/second
-|                |                        | 80      | angle(tBodyGyroJerkMean,gravityMean) | radians/second
-|                |                        | 81      | angle(X,gravityMean)   |               radians/second
-|                |                        | 82      | angle(Y,gravityMean)   |               radians/second
-|                |                        | 83      | angle(Z,gravityMean)   |               radians/second
+|                |                        | 67      |  fBodyGyro-meanFreq()-X   |             Hertz
+|                |                        | 68      |  BodyGyro-meanFreq()-Y    |             Hertz
+|                |                        | 69      |  fBodyGyro-meanFreq()-Z   |             Hertz
+|                |                        | 70      |  fBodyAccMag-mean()       |   standard gravity units 'g' 
+|                |                        | 71      |  fBodyAccMag-std()        |   standard gravity units 'g'
+|                |                        | 72      |  fBodyAccMag-meanFreq()   |             Hertz
+|                |                        | 73      |  fBodyBodyAccJerkMag-mean()   |    standard gravity units 'g'
+|                |                        | 74      |  fBodyBodyAccJerkMag-std()    |    standard gravity units 'g'
+|                |                        | 75      |  fBodyBodyAccJerkMag-meanFreq()  |      Hertz
+|                |                        | 76      |  fBodyBodyGyroMag-mean()  |         radians/second 
+|                |                        | 77      |  fBodyBodyGyroMag-std()   |         radians/second
+|                |                        | 78      |  fBodyBodyGyroMag-meanFreq()  |         Hertz
+|                |                        | 79      |  fBodyBodyGyroJerkMag-mean()  | standard gravity units 'g'
+|                |                        | 80      |  fBodyBodyGyroJerkMag-std()   | standard gravity units 'g'
+|                |                        | 81      |  fBodyBodyGyroJerkMag-meanFreq()    |   Hertz
+|                |                        | 82      |  angle(tBodyAccMean,gravity)          | gravity units 'g'
+|                |                        | 83      |  angle(tBodyAccJerkMean),gravityMean) | gravity units 'g'
+|                |                        | 84      |  angle(tBodyGyroMean,gravityMean)     | gravity units 'g'
+|                |                        | 85      |  angle(tBodyGyroJerkMean,gravityMean) | gravity units 'g'
+|                |                        | 86      |  angle(X,gravityMean)   |               gravity units 'g'
+|                |                        | 87      |  angle(Y,gravityMean)   |               gravity units 'g'
+|                |                        | 88      |  angle(Z,gravityMean)   |               gravity units 'g'
               
 
 The data was saved to a file called "finalTidyDataSet.csv" for later inspection.
@@ -337,8 +256,8 @@ The data was saved to a file called "finalTidyDataSet.csv" for later inspection.
 - imported_Test: data with combined data from X_Test, Y_Test, and Sub_Test
 - imported_Train: data with combined data from X_Train, Y_Train, and Sub_Train
 
-- filtered_Test: data with reduced columns for only 62 meansurements with subject number and activity columns
-- filtered_Train: data with reduced columns for only 62 meansurements with subject number and activity columns
+- filtered_Test: data with reduced columns for only mean & std names along with subject number and activity columns
+- filtered_Train: data with reduced columns for only mean & std names along with subject number and activity columns
 
 - mergedBodyData: data created by combining filtered_Test and filtered_Train data frames
 
